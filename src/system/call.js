@@ -2,13 +2,13 @@
 /// Call
 ///
 
-// The class Call is used to invoke scheme closure from 
+// The class Call is used to invoke scheme closure from
 // library functions.
 //
 // Call#initialize takes three arguments: proc, args and after.
 //   * proc is the scheme closure to invoke.
 //   * args is an Array (not list!) of arguments for the invocation.
-//   * after is a javascript function which is invoked when 
+//   * after is a javascript function which is invoked when
 //     returned from the proc.
 //
 //     after takes two arguments: ar and intp.
@@ -99,7 +99,7 @@ BiwaScheme.Iterator = {
       for(var i=0; i<this.size; i++)
         if(!this.iterators[i].has_next())
           return false;
-      
+
       return true;
     },
     next: function(){
@@ -127,7 +127,7 @@ BiwaScheme.Iterator = {
 // Call.foreach - shortcut for successive Calls
 //
 // Some library functions, such as for-each or map,
-// call a closure for each element. Call.foreach is 
+// call a closure for each element. Call.foreach is
 // a utility to help defining such methods.
 //
 // Call.foreach takes a sequence and some callbacks.
@@ -161,7 +161,7 @@ BiwaScheme.Call.foreach = function(obj, callbacks, is_multi){
     if(!callbacks[key])
       callbacks[key] = BiwaScheme.Call.default_callbacks[key];
   })
-  
+
   var iterator = null;
   var x = null;
 

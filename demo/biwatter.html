@@ -27,18 +27,18 @@
 ;(define (name-of user)          (cadr (assoc "name" user)))
 ;(define (url-of user)           (cadr (assoc "url" user)))
 
-;; class post 
+;; class post
 ;(define (truncated? post) (cadr (assoc "truncated" post)))
 (define (text-of post)    (cadr (assoc "text" post)))
 ;(define (postid-of post)  (cadr (assoc "id" post)))
 ;(define (source-of post)  (cadr (assoc "source" post)))
 (define (date-of post)    (parse-date (cadr (assoc "created_at" post))))
 (define (user-of post)    (cadr (assoc "user" post)))
-(define (screen-name post) 
+(define (screen-name post)
   (screen-name-of (user-of post)))
 
 (define (describe-post post)
-  (print (date->string (date-of post) "~T") 
+  (print (date->string (date-of post) "~T")
          ": "
          "<" (screen-name post) "> "
          (text-of post)))

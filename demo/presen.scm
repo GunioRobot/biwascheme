@@ -14,7 +14,7 @@
 
 (define (wrap-by-tag tag content)
   (string-append "<" tag ">" content "</" tag ">"))
- 
+
 (define (make-li item)
   (wrap-by-tag "li" item))
 (define (make-ul items)
@@ -27,7 +27,7 @@
   (let1 data (vector-ref *presen* n)
     (let ((title (car data))
           (items (cadr data)))
-      (set-content! ($ "presen") 
+      (set-content! ($ "presen")
         (make-page title items)))))
 
 (define *num* 0)
@@ -48,11 +48,11 @@
     (presen-page 0)))
 
 (add-handler! ($ "next") "click"
-  (lambda (e) 
+  (lambda (e)
     (presen-page (+ *num* 1))))
 
 (add-handler! ($ "back") "click"
-  (lambda (e) 
+  (lambda (e)
     (presen-page (- *num* 1))))
 
 (add-handler! ($ "last") "click"
@@ -65,7 +65,7 @@
     (element-toggle! ($ "repl"))))
 
 (add-handler! ($ "repl-eval") "click"
-  (lambda (e)             
-    (set-content! ($ "repl-dst") 
+  (lambda (e)
+    (set-content! ($ "repl-dst")
                   (html-escape (write-to-string (eval (get-content ($ "repl-src"))))))
     #f))

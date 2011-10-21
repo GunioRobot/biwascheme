@@ -25,7 +25,7 @@ BiwaScheme.Interpreter = BiwaScheme.Class.create({
   },
 
   //s: depth of stack to save
-  //ret: saved(copied) stack 
+  //ret: saved(copied) stack
   save_stack: function(s){
     var v = [];
     for(var i=0; i<s; i++){
@@ -51,14 +51,14 @@ BiwaScheme.Interpreter = BiwaScheme.Class.create({
     // note: implementation of this function for final version doesn't exist in 3imp.pdf..
     var ss = this.push(n, s);
     return this.closure(["refer-local", 0,
-                          ["nuate", this.save_stack(ss), 
-                          ["return"]]], 
+                          ["nuate", this.save_stack(ss),
+                          ["return"]]],
                         0,     //n (number of frees)
                         null,  //s (stack position to get frees)
                         -1);   // dotpos
   },
 
-  // shift stack 
+  // shift stack
   // n: number of items to skip (from stack top)
   // m: number of items to shift
   // s: stack pointer (= index of stack top + 1)
@@ -130,7 +130,7 @@ BiwaScheme.Interpreter = BiwaScheme.Class.create({
   _execute: function(a, x, f, c, s){
     var ret = null;
     //puts("executing "+x[0]);
-    
+
     while(true){ //x[0] != "halt"){
 
       this.run_dump_hook(a, x, f, c, s);
@@ -184,7 +184,7 @@ BiwaScheme.Interpreter = BiwaScheme.Class.create({
         if(!BiwaScheme.TopEnv.hasOwnProperty(name) &&
            !BiwaScheme.CoreEnv.hasOwnProperty(name))
           throw new BiwaScheme.Error("global variable '"+name+"' is not defined");
-        
+
         BiwaScheme.TopEnv[name] = a;
         a = BiwaScheme.undef;
         break;
@@ -221,7 +221,7 @@ BiwaScheme.Interpreter = BiwaScheme.Class.create({
         var n=x[1], x=x[2];
 
         // the number of arguments in the last call
-        var n_args = this.index(s, n);  
+        var n_args = this.index(s, n);
 
         s = this.shift_args(n, n_args, s);
         break;
@@ -257,7 +257,7 @@ BiwaScheme.Interpreter = BiwaScheme.Class.create({
               }
               s++;
               // => Update the number of arguments
-              this.index_set(s, -1, this.index(s, -1) + 1);  
+              this.index_set(s, -1, this.index(s, -1) + 1);
             }
             this.index_set(s, dotpos, ls);
           }
@@ -267,7 +267,7 @@ BiwaScheme.Interpreter = BiwaScheme.Class.create({
         else if(func instanceof Function){ // Apply JavaScript function
           // load arguments from stack
           var args = [];
-          for(var i=0; i<n_args; i++) 
+          for(var i=0; i<n_args; i++)
             args.push(this.index(s, i));
 
           // invoke the function
@@ -300,12 +300,12 @@ BiwaScheme.Interpreter = BiwaScheme.Class.create({
                              ["return"]];
             var call_proc = ["constant", result.args.length,
                             ["argument",
-                            ["constant", result.proc, 
+                            ["constant", result.proc,
                             ["apply", result.args.length]]]];
             var push_args = _.inject(result.args, function(opc, arg){
               // (foo 1 2) => first push 2, then 1
               //   [constant 2 ... [constant 1 ... ]
-              return ["constant", arg, 
+              return ["constant", arg,
                      ["argument",
                      opc]];
             }, call_proc);
@@ -383,8 +383,8 @@ BiwaScheme.Interpreter = BiwaScheme.Class.create({
         var v=x.second(), x=x.third();
         ret = BiwaScheme.List(BiwaScheme.Sym("set!"), v, this.expand(x, flag));
         break;
-      case BiwaScheme.Sym("call-with-current-continuation"): 
-      case BiwaScheme.Sym("call/cc"): 
+      case BiwaScheme.Sym("call-with-current-continuation"):
+      case BiwaScheme.Sym("call/cc"):
         var x=x.second();
         ret = BiwaScheme.List(BiwaScheme.Sym("call/cc"), this.expand(x, flag));
         break;
@@ -405,7 +405,7 @@ BiwaScheme.Interpreter = BiwaScheme.Class.create({
           var fl;
           for(;;){
             ret = this.expand(ret, fl={});
-            if(!fl["modified"]) 
+            if(!fl["modified"])
               break;
           }
         }
@@ -425,11 +425,11 @@ BiwaScheme.Interpreter = BiwaScheme.Class.create({
   evaluate: function(str, after_evaluate){
     this.parser = new BiwaScheme.Parser(str);
     this.compiler = new BiwaScheme.Compiler();
-    if(after_evaluate) 
+    if(after_evaluate)
       this.after_evaluate = after_evaluate;
 
     if(BiwaScheme.Debug) puts("executing: " + str);
-     
+
     this.is_top = true;
     this.file_stack = [];
     return this.resume(false);

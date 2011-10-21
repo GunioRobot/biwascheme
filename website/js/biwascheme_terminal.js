@@ -21,7 +21,7 @@ jQuery(document).ready(function($, undefined) {
     var bscheme = new BiwaScheme.Interpreter(function(e, state) {
        term.error(e.message);
     });
-   
+
     puts = function(string) {
         term.echo(string);
     };
@@ -48,7 +48,7 @@ jQuery(document).ready(function($, undefined) {
             code_to_evaluate = '';
         } else {
             term.set_prompt('...            ');
-            
+
         }
     }, {
         greetings: function(callback) {
@@ -105,7 +105,7 @@ jQuery(document).ready(function($, undefined) {
                     }
                 },
                 error: function(xhr, stat) {
-                    term.error("[AJAX] " + stat + " server reponse: \n" + 
+                    term.error("[AJAX] " + stat + " server reponse: \n" +
                                xhr.reponseText);
                 }});
         });
@@ -141,7 +141,7 @@ jQuery(document).ready(function($, undefined) {
         assert_list(args[1]);
         return $.inArray(args[0], args[1].to_array()) != -1;
     });
-    
+
     // concatenate two or more string
     BiwaScheme.define_libfunc("concat", 1, null, function(args) {
         for (var i=args.length; i--;) {

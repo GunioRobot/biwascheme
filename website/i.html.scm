@@ -21,7 +21,7 @@
          (div :data-role "content"
               (div :data-role "fieldcontain"
                    (textarea :cols 40 :rows 8 :id "src" "(+ 1 2)"))
-              
+
               (label "result:")
               (div :id "bs-console")
          )

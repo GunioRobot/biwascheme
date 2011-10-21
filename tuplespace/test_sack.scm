@@ -8,43 +8,43 @@
 (test-start "sack")
 (load "./sack.scm")
 (import sack)
- 
+
 ;----------------------------------------------------------
 (test-section "module code")
 
 (test-module 'sack)
 
 ;----------------------------------------------------------
-(test-section "instantiation") 
+(test-section "instantiation")
 
-(test* "sack-new" 
-  #t 
+(test* "sack-new"
+  #t
   (is-a? (sack-new) <sack>))
 
 ;----------------------------------------------------------
-(test-section "request") 
+(test-section "request")
 
 (test* "sack-query-ref (GET)"
   '("123" . "456")
-  (let1 req (make <http-request> 
-                  :method "GET" 
+  (let1 req (make <http-request>
+                  :method "GET"
                   :path "/foo?abc=123&cde=456")
     (cons (sack-query-ref req "abc")
           (sack-query-ref req "cde"))))
 
 ;----------------------------------------------------------
-(test-section "network") 
+(test-section "network")
 
 (define *sack* (sack-new :log-level 0))
 
-(sack-add-routing *sack* 
+(sack-add-routing *sack*
   #/myname/
   (lambda (req)
     "my name is sack"))
 
-(define server-thread 
-  (make-thread 
-    (lambda () 
+(define server-thread
+  (make-thread
+    (lambda ()
       (sack-start! *sack* 12346 'default))))
 
 (define tester-thread

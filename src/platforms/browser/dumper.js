@@ -37,7 +37,7 @@ BiwaScheme.Dumper = BiwaScheme.Class.create({
     var i = 1;
     while(!(obj[i] instanceof Array) && i<obj.length){
       if(obj[0] == "constant")
-        s += "&nbsp;<span class='dump_constant'>" + 
+        s += "&nbsp;<span class='dump_constant'>" +
              this.dump_obj(obj[i]) + "</span>";
       else
         s += "&nbsp;" + this.dump_obj(obj[i]);
@@ -90,7 +90,7 @@ BiwaScheme.Dumper = BiwaScheme.Class.create({
     else if (size < stk.length){
       var l = stk.length - 1;
       s += "<tr><td class='dump_dead'>[" + l + "]</td>" +
-           "<td class='dump_dead'>" + 
+           "<td class='dump_dead'>" +
            _.truncate(this.dump_obj(stk[l]), this.stack_max_len) +
            "</td></tr>";
     }
@@ -150,7 +150,7 @@ BiwaScheme.Dumper = BiwaScheme.Class.create({
       s += "<table>";
 
       // header
-      s += "<tr><td colspan='4'>" + 
+      s += "<tr><td colspan='4'>" +
            "<a href='#' id='dump_" + this.n_dumps + "_header'>" +
            "#"+this.n_dumps+"</a></td></tr>";
 

@@ -52,7 +52,7 @@
       (pre "<font color='purple'>&lt;script src=\"biwascheme.js\"&gt;</font>
 <font color='purple'>(</font><font color=blue>display</font> <font color=red>\"hello, world!\"</font><font color='purple'>)</font>
 <font color='purple'>&lt;/script&gt;</font>")
-      
+
       (h2 "Demo")
       (ul
         (link-list '(("repos/repl.html"

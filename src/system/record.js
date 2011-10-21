@@ -102,7 +102,7 @@ BiwaScheme.Record.CD = BiwaScheme.Class.create({
     if(parent_cd && parent_cd.has_custom_protocol && !protocol)
       throw new Error("Record.CD.new: protocol must be specified when parent_cd has a custom protocol");
   },
-  
+
   _default_protocol_for_base_types: function(){
     // (lambda (p) p)
     // called with `p' as an argument
@@ -114,7 +114,7 @@ BiwaScheme.Record.CD = BiwaScheme.Class.create({
   },
 
   _default_protocol_for_derived_types: function(){
-    // (lambda (n) 
+    // (lambda (n)
     //   (lambda (a b x y s t)
     //     (let1 p (n a b x y) (p s t))))
     // called with `n' as an argument
@@ -168,7 +168,7 @@ BiwaScheme.Record.CD = BiwaScheme.Class.create({
   _make_p: function(){
     return function(values){
       return new BiwaScheme.Record(this.rtd, values);
-      // TODO: check argc 
+      // TODO: check argc
     };
   },
 
@@ -206,7 +206,7 @@ BiwaScheme.Record.CD = BiwaScheme.Class.create({
       var n = function(my_values){
         var values = my_values.concat(children_values);
         return new BiwaScheme.Record(rtd, values);
-        // TODO: check argc 
+        // TODO: check argc
       };
       return n;
     }

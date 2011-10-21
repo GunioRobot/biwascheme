@@ -23,7 +23,7 @@ Person = Struct.new(:name, :age, :address)
   (string->regexp ":(\\w+)"))
 
 (define (parse-member mems)
-  (map (lambda (mem) 
+  (map (lambda (mem)
          (cadr (regexp-exec rexp-member mem)))
     (string-split mems ",")))
 
@@ -36,13 +36,13 @@ Person = Struct.new(:name, :age, :address)
       (unless def (print "error: no match")))))
 
 (define (joint-with ls prefix)
-  (string-join (map (lambda (x) (string-append prefix x)) ls) 
+  (string-join (map (lambda (x) (string-append prefix x)) ls)
                ", "))
 
 (add-handler! ($ "convert") "click"
   (lambda (e)
     (let1 src (get-content ($ "src"))
-      (call-with-values 
+      (call-with-values
         (lambda () (parse-define src))
         (lambda (klass mems)
           (print "class " klass)

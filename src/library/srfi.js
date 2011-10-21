@@ -5,7 +5,7 @@
 //
 
 with(BiwaScheme) {
-  
+
   //
   // srfi-1 (list)
   //
@@ -27,7 +27,7 @@ with(BiwaScheme) {
 
   //
   // srfi-6 & Gauche (string port)
-  // 
+  //
   define_libfunc("open-input-string", 1, 1, function(ar){
     assert_string(ar[0]);
     return new Port.StringInput(ar[0]);
@@ -70,7 +70,7 @@ with(BiwaScheme) {
 //set-time-type! time time-type
 //set-time-nanosecond! time integer
 //set-time-second! time integer
-//copy-time time1 -> time2 
+//copy-time time1 -> time2
 //  // Time comparison procedures
 //time<=? time1 time2 -> boolean
 //time<? time1 time2 -> boolean
@@ -131,7 +131,7 @@ with(BiwaScheme) {
 
   // Time/Date/Julian Day/Modified Julian Day Converters
   // (snipped)
-  
+
   // Date to String/String to Date Converters
   // TODO: support locale
   //   * date_names
@@ -140,19 +140,19 @@ with(BiwaScheme) {
   //   * ~X 2007/01/01
   BiwaScheme.date_names = {
     weekday: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-    full_weekday: ["Sunday", "Monday", "Tuesday", 
+    full_weekday: ["Sunday", "Monday", "Tuesday",
       "Wednesday", "Thursday", "Friday", "Saturday"],
-    month: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+    month: ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
       "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
     full_month: ["January", "February", "March", "April",
-      "May", "June", "July", "August", "September", 
+      "May", "June", "July", "August", "September",
       "Octorber", "November", "December"]
   }
 
   BiwaScheme.date2string = function(date, format){
-    var zeropad  = function(n){ return n<10 ? "0"+n : ""+n }; 
-    var spacepad = function(n){ return n<10 ? " "+n : ""+n }; 
-    
+    var zeropad  = function(n){ return n<10 ? "0"+n : ""+n };
+    var spacepad = function(n){ return n<10 ? " "+n : ""+n };
+
     var getter = {
       a: function(x){ return date_names.weekday[x.getDay()] },
       A: function(x){ return date_names.full_weekday[x.getDay()] },
@@ -206,7 +206,7 @@ with(BiwaScheme) {
         return x;
     })
   }
-  
+
   // date->string
   define_libfunc("date->string", 1, 2, function(ar){
     assert_date(ar[0]);

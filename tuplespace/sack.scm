@@ -1,6 +1,6 @@
 ;;;
 ;;; sack.scm
-;;; 
+;;;
 
 (define-module sack
   (use gauche.net)
@@ -13,7 +13,7 @@
   (use util.queue)
   (use util.list) ; assoc-ref
   (use www.cgi) ; cgi-parse-parameters, etc
-  (export 
+  (export
     <sack> base-path-of after-of log-debug log-info log-connection log-error
     sack-query-ref
     sack-new sack-start! sack-add-routing
@@ -74,7 +74,7 @@
 ;;;
 
 (define *sack-default-routing*
-  (list (cons #// (lambda (req) 
+  (list (cons #// (lambda (req)
                     #`"hello, I'm cometserv. ,(ref req 'path)"))))
 
 (define (httpd-dispatch req)
@@ -115,8 +115,8 @@
 
 (define (httpd-send-responce text port)
   (log-connection "200 OK")
-  (display 
-    (string-append 
+  (display
+    (string-append
       #`"HTTP/1.0 200 OK\r\nServer: ,|server-name|\r\n"
       #`"Content-type: text/html\r\n"
       #`"Content-Length: ,(string-size text)\r\n"
@@ -135,7 +135,7 @@
           (make <http-request> :method method :path path))
          ((method)
           (log-error #`"400 Bad Request (path unspecified)"))))
-                
+
 (define (httpd-recieve cs)
   (thread-start!
     (make-thread
@@ -160,7 +160,7 @@
                     (if (string? res)
                       (httpd-send cs res)
                       (loop res))))
-                (rescue e 
+                (rescue e
                         (log-error #`"My handler: ,(slot-ref e 'message)")
                         (print (ref e 'message))
                         (report-error e))))
@@ -176,7 +176,7 @@
 (define (httpd-main nport)
   (let1 ss (make-server-socket 'inet nport :reuse-addr? #t)
     (while #t
-      (try (begin 
+      (try (begin
              (log-debug "Waiting for a client")
              (let1 cs (socket-accept ss)
                (log-debug "A Client accepted")
@@ -188,14 +188,14 @@
              (report-error e))))))
 
 (define (httpd-start nport log-path)
-  (log-open (cond 
+  (log-open (cond
 	      ((eq?      log-path 'default) #t); log to current error port
 	      ((string=? log-path "syslog") 'syslog)
 	      (else                         log-path)))
   (log-connection #`"server started with port ,|nport|")
 
   (try (begin
-         (set-signal-handler!  SIGPIPE 
+         (set-signal-handler!  SIGPIPE
            (lambda (n) (log-error #`"Catched signal ,|n|")))
           (set-signal-handler!  SIGINT
             (lambda (n) (log-error #`"Received SIGINT") (exit 0))))
@@ -209,8 +209,8 @@
 ;;;
 (define-class <http-request> () ; () = no super class
   ((method   :init-keyword :method   :accessor method-of)
-   (path     :init-keyword :path     :accessor path-of) 
-   (protocol :init-keyword :protocol :accessor protocol-of) 
+   (path     :init-keyword :path     :accessor path-of)
+   (protocol :init-keyword :protocol :accessor protocol-of)
    (base-path :accessor base-path-of)
    (after  :accessor after-of)
    (body   :accessor body-of)
@@ -232,7 +232,7 @@
 ;;;
 (define-class <http-responce> () ; () = no super class
   (body status-code status-message) ; slots
-  ) 
+  )
 
 ;;;
 ;;; sack
@@ -251,7 +251,7 @@
 
 (define-method sack-add-routing ((sack <sack>) rexp proc)
   (slot-set! sack 'routing
-             (append (list (cons rexp proc)) 
+             (append (list (cons rexp proc))
                      (ref sack 'routing))))
 
 (define-method sack-start! ((sack <sack>) nport log-path)

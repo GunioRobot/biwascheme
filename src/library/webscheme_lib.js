@@ -237,7 +237,7 @@ if( typeof(BiwaScheme)!='object' ) BiwaScheme={}; with(BiwaScheme) {
     else if(pred(tree.car) === false)
       return false;
     else
-      return BiwaScheme.tree_all(tree.cdr, pred); 
+      return BiwaScheme.tree_all(tree.cdr, pred);
   };
   define_libfunc("element-new", 1, 1, function(ar){
     var string_or_symbol = function(item){

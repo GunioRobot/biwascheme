@@ -103,11 +103,11 @@ ev(" (define point? (record-predicate (record-type-descriptor point))) (define p
 //p(ev('((lambda (x y) (+ x y)) 99 100)'));
 //puts(typeof(typeof(window)));
 //p(ev('(call/cc (lambda (cc) (display 1) (cc "Nice boat") 2))'));
-//(((lambda (f) 
-//   ((lambda (proc) (f (lambda (arg) ((proc proc) arg)))) 
-//    (lambda (proc) (f (lambda (arg) ((proc proc) arg)))))) 
-//  (lambda (self) 
-//    (lambda (ls) (if (null? ls) 0 (+ 1 (self (cdr ls))))))) 
+//(((lambda (f)
+//   ((lambda (proc) (f (lambda (arg) ((proc proc) arg))))
+//    (lambda (proc) (f (lambda (arg) ((proc proc) arg))))))
+//  (lambda (self)
+//    (lambda (ls) (if (null? ls) 0 (+ 1 (self (cdr ls)))))))
 // '(1 2 3 4 5))
 
 //p(ev("(((lambda (f) ((lambda (proc) (f (lambda (arg) ((proc proc) arg)))) (lambda (proc) (f (lambda (arg) ((proc proc) arg)))))) (lambda (self) (lambda (ls) (if (null? ls) 0 (+ 1 (self (cdr ls))))))) '(1 2 3 4 5))"))

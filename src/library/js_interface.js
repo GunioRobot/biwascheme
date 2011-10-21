@@ -37,7 +37,7 @@ if( typeof(BiwaScheme)!='object' ) BiwaScheme={}; with(BiwaScheme) {
 
   // (js-new "Date" 2005 1 1)
   // (js-new "Draggable elem 'onEnd (lambda (drg) ...))
-  //   If symbol is given, following arguments are converted to 
+  //   If symbol is given, following arguments are converted to
   //   an js object. If any of them is a scheme closure,
   //   it is converted to js function which invokes that closure.
   //

@@ -1,4 +1,4 @@
-var BiwaScheme = BiwaScheme || {}; 
+var BiwaScheme = BiwaScheme || {};
 
 (function(){ //local namespace
   // Find the script tag

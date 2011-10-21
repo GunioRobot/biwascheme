@@ -21,7 +21,7 @@ if( typeof(BiwaScheme)!='object' ) BiwaScheme={}; with(BiwaScheme) {
   // json->sexp
   // Array -> list
   // Object -> alist
-  // (number, boolean, string, 
+  // (number, boolean, string,
   //
   BiwaScheme.json2sexp = function(json){
     switch(true){
@@ -56,7 +56,7 @@ if( typeof(BiwaScheme)!='object' ) BiwaScheme={}; with(BiwaScheme) {
   });
 
   // string
-  
+
   define_libfunc("string-concat", 1, 1, function(ar){
     assert_list(ar[0]);
     return ar[0].to_array().join("");
@@ -77,7 +77,7 @@ if( typeof(BiwaScheme)!='object' ) BiwaScheme={}; with(BiwaScheme) {
     }
     return ar[0].to_array().join(delim);
   })
-  
+
   // lists
 
   define_libfunc("intersperse", 2, 2, function(ar){
@@ -99,7 +99,7 @@ if( typeof(BiwaScheme)!='object' ) BiwaScheme={}; with(BiwaScheme) {
 
     var results = [], i = 0;
     return Call.multi_foreach(lists, {
-      call: function(xs){ 
+      call: function(xs){
         var args = _.map(xs, function(x){ return x.car });
         args.unshift(i);
         i++;
@@ -111,7 +111,7 @@ if( typeof(BiwaScheme)!='object' ) BiwaScheme={}; with(BiwaScheme) {
   });
 
   // sorting
-  
+
   // These functions takes a Scheme proc and sort the given
   // list or vector using the proc as the compare function.
   //
@@ -151,7 +151,7 @@ if( typeof(BiwaScheme)!='object' ) BiwaScheme={}; with(BiwaScheme) {
     sort_with_comp(ar[1], ar[0]);
     return BiwaScheme.undef;
   });
-  
+
   // macros
 
   //(define-macro (foo x) body ...)
@@ -197,7 +197,7 @@ if( typeof(BiwaScheme)!='object' ) BiwaScheme={}; with(BiwaScheme) {
       var given_args = sexp.to_array();
 
       given_args.shift();
-      
+
       var intp = new Interpreter();
       var args = rearrange_args(expected_args, given_args);
       var result = intp.invoke_closure(cls, args);
@@ -237,7 +237,7 @@ if( typeof(BiwaScheme)!='object' ) BiwaScheme={}; with(BiwaScheme) {
   define_libfunc("gensym", 0, 0, function(ar){
     return BiwaScheme.gensym();
   });
-  
+
   // i/o
 
   define_libfunc("print", 1, null, function(ar){
@@ -258,13 +258,13 @@ if( typeof(BiwaScheme)!='object' ) BiwaScheme={}; with(BiwaScheme) {
     assert_port(ar[0]);
     return !(ar[0].is_open);
   });
-  
+
   // syntax
-  
+
   define_syntax("let1", function(x){
-    //(let1 vari expr body ...) 
+    //(let1 vari expr body ...)
     //=> ((lambda (var) body ...) expr)
-    var vari = x.cdr.car; 
+    var vari = x.cdr.car;
     var expr = x.cdr.cdr.car;
     var body = x.cdr.cdr.cdr;
 
@@ -282,19 +282,19 @@ if( typeof(BiwaScheme)!='object' ) BiwaScheme={}; with(BiwaScheme) {
       throw new Error(fname + ": regexp required, but got " + to_write(obj));
   }
 
-  //Function: string->regexp string &keyword case-fold 
+  //Function: string->regexp string &keyword case-fold
   define_libfunc("string->regexp", 1, 1, function(ar){
     assert_string(ar[0], "string->regexp");
     return new RegExp(ar[0]); //todo: case-fold
   })
-  //Function: regexp? obj 
+  //Function: regexp? obj
   define_libfunc("regexp?", 1, 1, function(ar){
     return (ar[0] instanceof RegExp);
   })
-  //Function: regexp->string regexp 
+  //Function: regexp->string regexp
   define_libfunc("regexp->string", 1, 1, function(ar){
     assert_regexp(ar[0], "regexp->string");
-    return ar[0].toString().slice(1, -1); //cut '/' 
+    return ar[0].toString().slice(1, -1); //cut '/'
   })
 
   define_libfunc("regexp-exec", 2, 2, function(ar){
@@ -308,30 +308,30 @@ if( typeof(BiwaScheme)!='object' ) BiwaScheme={}; with(BiwaScheme) {
     return (ret === null) ? false : array_to_list(ret);
   })
 
-//  //Function: rxmatch regexp string 
+//  //Function: rxmatch regexp string
 //  define_libfunc("rxmatch", 1, 1, function(ar){
 //    assert_regexp(ar[0], "rxmatch");
 //    assert_string(ar[1], "rxmatch");
 //    return ar[0].match(ar[1]);
 //  });
-  //Function: rxmatch-start match &optional (i 0) 
-  //Function: rxmatch-end match &optional (i 0) 
-  //Function: rxmatch-substring match &optional (i 0) 
-  //Function: rxmatch-num-matches match   
-  //Function: rxmatch-after match &optional (i 0) 
-  //Function: rxmatch-before match &optional (i 0) 
-  //Generic application: regmatch &optional index 
-  //Generic application: regmatch 'before &optional index 
-  //Generic application: regmatch 'after &optional index 
-  //Function: regexp-replace regexp string substitution 
-  //Function: regexp-replace-all regexp string substitution 
-  //Function: regexp-replace* string rx1 sub1 rx2 sub2 ... 
-  //Function: regexp-replace-all* string rx1 sub1 rx2 sub2 ... 
-  //Function: regexp-quote string 
-  //Macro: rxmatch-let match-expr (var ...) form ... 
-  //Macro: rxmatch-if match-expr (var ...) then-form else-form 
-  //Macro: rxmatch-cond clause ... 
-  //Macro: rxmatch-case string-expr clause ... 
+  //Function: rxmatch-start match &optional (i 0)
+  //Function: rxmatch-end match &optional (i 0)
+  //Function: rxmatch-substring match &optional (i 0)
+  //Function: rxmatch-num-matches match
+  //Function: rxmatch-after match &optional (i 0)
+  //Function: rxmatch-before match &optional (i 0)
+  //Generic application: regmatch &optional index
+  //Generic application: regmatch 'before &optional index
+  //Generic application: regmatch 'after &optional index
+  //Function: regexp-replace regexp string substitution
+  //Function: regexp-replace-all regexp string substitution
+  //Function: regexp-replace* string rx1 sub1 rx2 sub2 ...
+  //Function: regexp-replace-all* string rx1 sub1 rx2 sub2 ...
+  //Function: regexp-quote string
+  //Macro: rxmatch-let match-expr (var ...) form ...
+  //Macro: rxmatch-if match-expr (var ...) then-form else-form
+  //Macro: rxmatch-cond clause ...
+  //Macro: rxmatch-case string-expr clause ...
 
 }
 

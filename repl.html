@@ -61,21 +61,21 @@
         <li><div class="bs-snippet">(+ 1 2)</div></li>
         <li><div class="bs-snippet">(not #t) </div></li>
         <li><div class="bs-snippet">(boolean=? #t #t #t) </div></li>
-        <li><div class="bs-snippet">;; length by Y combinator 
-(((lambda (f) 
+        <li><div class="bs-snippet">;; length by Y combinator
+(((lambda (f)
     ((lambda (proc) (f (lambda (arg) ((proc proc) arg))))
      (lambda (proc) (f (lambda (arg) ((proc proc) arg))))))
   (lambda (self)
-    (lambda (ls) 
-      (if (null? ls) 0 (+ 1 (self (cdr ls))))))) 
+    (lambda (ls)
+      (if (null? ls) 0 (+ 1 (self (cdr ls)))))))
  '(1 2 3 4 5))
         </div></li>
         <li><div class="bs-snippet">;; length by Y combinator (tail recursive)
 (((lambda (f)
   ((lambda (proc) (f (lambda (arg1 arg2) ((proc proc) arg1 arg2))))
      (lambda (proc) (f (lambda (arg1 arg2) ((proc proc) arg1 arg2))))))
-  (lambda (self) 
-    (lambda (ls acc) 
+  (lambda (self)
+    (lambda (ls acc)
       (if (null? ls) acc (self (cdr ls) (+ 1 acc))))))
  '(1 2 3 4 5) 0)
         </div></li>

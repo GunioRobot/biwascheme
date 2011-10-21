@@ -1,15 +1,15 @@
 ;;;
 ;;; tuplespace.scm
-;;; 
+;;;
 
 (define-module tuplespace
   (use util.match)
   (use srfi-1)
   (use gauche.threads)
-  (export 
+  (export
     tuplespace-unsafe-query?
     <tuplespace>
-    tuplespace-init tuplespace-write 
+    tuplespace-init tuplespace-write
     tuplespace-read tuplespace-readp tuplespace-read-async
     tuplespace-take tuplespace-takep tuplespace-take-async
     tuplespace-dump tuplespace-clear)
@@ -22,10 +22,10 @@
 ;; class
 ;;
 (define-class <tuplespace> () ; () = no super class
-  ((tuples  :init-value '()      :accessor tuples-of) 
+  ((tuples  :init-value '()      :accessor tuples-of)
    (waiters :init-value '()      :accessor waiters-of)
    (whitelist :init-value #f     :accessor whitelist-of)
-   (filter  :init-value identity :accessor filter-of) 
+   (filter  :init-value identity :accessor filter-of)
    (mutex   :init-form (make-mutex) :accessor mutex-of)
    ))
 (define-class <waiter> ()     ; () = no super class
@@ -34,7 +34,7 @@
    (type     :init-keyword :type     :accessor type-of)
    ))
 (define-method inspect-waiters ((ts <tuplespace>))
-  (map (lambda (waiter) 
+  (map (lambda (waiter)
          (write-to-string (query-of waiter)))
     (waiters-of ts)))
 
@@ -48,10 +48,10 @@
     (cond ((pair? x)
            (any unsafe-question-item? x))
           ((symbol? x)
-           (if (memq x whitelist) 
-             #f 
+           (if (memq x whitelist)
+             #f
              x))
-          (else 
+          (else
             #f)))
   (define (unsafe-pair? ls)
     (and (pair? ls)
@@ -82,7 +82,7 @@
         (when *debug* (print "\nwaiter+ " (inspect-waiters ts)))))))
 
 
-;init 
+;init
 (define (tuplespace-init . args)
   (apply make <tuplespace> args))
 
@@ -90,7 +90,7 @@
 
 (define (notify-waiters value ts)
   (with-locking-mutex (mutex-of ts)
-    (lambda ()                      
+    (lambda ()
       (set! (waiters-of ts)
         (let loop ((waiters (waiters-of ts)))
           (if (null? waiters)
@@ -109,7 +109,7 @@
 (define-method tuplespace-write ((ts <tuplespace>) value)
   (let1 value ((filter-of ts) value)
     (when *debug* (print "write " value "; " (ref ts 'tuples)))
-    (slot-set! ts 'tuples 
+    (slot-set! ts 'tuples
                (cons value (ref ts 'tuples)))
     (notify-waiters value ts)
     value))

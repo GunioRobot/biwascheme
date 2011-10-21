@@ -132,7 +132,7 @@
 
 (define-method notify-tuple ((client <client>) result)
   (with-locking-mutex (mutex-of client)
-    (lambda ()                      
+    (lambda ()
       (enqueue! (queue-of client) result)
       (condition-variable-signal! (cv-of client)))))
 
@@ -198,7 +198,7 @@
   (lambda (req)
     (register-request req 'take)))
 
-(define *sended-log* 
+(define *sended-log*
   (open-output-file "sended_log.txt" :if-exists :append))
 (sack-add-routing *sack*
   #/^\/log/

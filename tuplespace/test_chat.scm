@@ -8,7 +8,7 @@
 ;;; utility
 (define (times proc n)
   (when (< 0 n)
-    (proc) 
+    (proc)
     (times proc (- n 1))))
 
 ;;; tuplespace
@@ -44,7 +44,7 @@
                   '(1 2 3))))))
 
 ;;; main
-(define chatters 
+(define chatters
   (list (make-chatter "yhara")
         (make-chatter "ujihisa")
         (make-chatter "hakobe")))

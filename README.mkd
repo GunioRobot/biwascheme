@@ -23,13 +23,13 @@ Just load biwascheme.js and write Scheme code.
     <!DOCTYPE html>
     <html>
     <body>
-    
+
     <div id="bs-console"></div>
-    
+
     <script src="biwascheme.js">
     (display "hello, world!")
     </script>
-    
+
     </body>
     </html>
 

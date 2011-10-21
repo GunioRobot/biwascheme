@@ -27,13 +27,13 @@ BiwaScheme.define_libfunc = function(fname, min, max, func, is_raw){
     }
     else{
       if (result === undefined){
-        throw new BiwaScheme.Bug("library function " + 
+        throw new BiwaScheme.Bug("library function " +
                                  "`" + fname + "'" +
                                  " returned JavaScript's undefined");
       }
       else if (result === null){
         throw new BiwaScheme.Bug("library function " +
-                                 "`" + fname + "'" + 
+                                 "`" + fname + "'" +
                                  " returned JavaScript's null");
       }
       else {
@@ -74,7 +74,7 @@ BiwaScheme.define_scmfunc = function(fname, min, max, str){
   (new Interpreter).evaluate("(define "+fname+" "+str+"\n)");
 }
 
-//  define_scmfunc("map+", 2, null, 
+//  define_scmfunc("map+", 2, null,
 //    "(lambda (proc ls) (if (null? ls) ls (cons (proc (car ls)) (map proc (cdr ls)))))");
 
 //
@@ -83,7 +83,7 @@ BiwaScheme.define_scmfunc = function(fname, min, max, str){
 var make_assert = function(check){
   return function(/*args*/){
     var fname = arguments.callee.caller
-                  ? arguments.callee.caller.fname 
+                  ? arguments.callee.caller.fname
                   : "";
     check.apply(this, [fname].concat(_.toArray(arguments)));
   }
@@ -119,8 +119,8 @@ var assert_between = make_assert(function(fname, obj, from, to){
   }
 
   if( obj < from || to < obj ){
-    throw new BiwaScheme.Error(fname + ": " + 
-                               "number must be between " + 
+    throw new BiwaScheme.Error(fname + ": " +
+                               "number must be between " +
                                from + " and " + to + ", but got " +
                                BiwaScheme.to_write(obj));
   }
@@ -137,7 +137,7 @@ var assert_vector = make_simple_assert("vector", BiwaScheme.isVector);
 
 var assert_hashtable = make_simple_assert("hashtable",
                                           BiwaScheme.isHashtable);
-var assert_mutable_hashtable = make_simple_assert("mutable hashtable", 
+var assert_mutable_hashtable = make_simple_assert("mutable hashtable",
                                             BiwaScheme.isMutableHashtable);
 
 var assert_record = make_simple_assert("record",
@@ -147,9 +147,9 @@ var assert_record_td = make_simple_assert("record type descriptor",
 var assert_record_cd = make_simple_assert("record constructor descriptor",
                                           BiwaScheme.isRecordCD);
 
-var assert_function = make_simple_assert("JavaScript function", 
+var assert_function = make_simple_assert("JavaScript function",
                                          _.isFunction);
-var assert_closure = make_simple_assert("scheme function", 
+var assert_closure = make_simple_assert("scheme function",
                                         BiwaScheme.isClosure);
 var assert_procedure = make_simple_assert("scheme/js function", function(obj){
   return BiwaScheme.isClosure(obj) || _.isFunction(obj);

@@ -29,7 +29,7 @@
 
   ;;; utilities
   (define (ox->string ox)
-    (if (eq? ox 'maru) "○" 
+    (if (eq? ox 'maru) "○"
       (if (eq? ox 'batu) "×"
         (print "error: unknown value: " ox))))
 

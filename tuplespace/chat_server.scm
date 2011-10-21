@@ -6,7 +6,7 @@
 
 ;(set! whitelist '(lambda < x))
 
-(add-manager 
+(add-manager
   (lambda ()
     (while #t
       (let ((tuple (tuplespace-take *ts* '(message _ _ _))))
@@ -14,7 +14,7 @@
         (tuplespace-write *ts* `(message ,message-id ,@(cdr tuple)))
         ))))
 
-(add-manager 
+(add-manager
   (lambda ()
     (while #t
       (let ((tuple (tuplespace-take *ts* '(connect))))

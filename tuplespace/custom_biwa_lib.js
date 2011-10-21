@@ -9,7 +9,7 @@ if( typeof(BiwaScheme)!='object' ) BiwaScheme={}; with(BiwaScheme) {
     },
 
     nonblocking_request: function(name, data){
-      var path = this.server_path + name + "?" 
+      var path = this.server_path + name + "?"
                    + encodeURIComponent(to_write(data));
       return this.connect(path);
     },
@@ -39,7 +39,7 @@ if( typeof(BiwaScheme)!='object' ) BiwaScheme={}; with(BiwaScheme) {
     dump: function(){
       return this.nonblocking_request("dump", "");
     },
-    
+
     read: function(query){
       return this.blocking_request("read", query);
     },

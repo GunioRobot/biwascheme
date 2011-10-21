@@ -19,13 +19,13 @@
          ...)))))
 
 (test-section "init")
-(test* "tuplespace-init should make instance of <tuplespace>" 
-       #t 
+(test* "tuplespace-init should make instance of <tuplespace>"
+       #t
        (is-a? (set! *ts* (tuplespace-init)) <tuplespace>))
 
 (test-section "write")
 (test* "tuplespace-write should return value wrote"
-       '(1 2 3) 
+       '(1 2 3)
        (tuplespace-write *ts* '(1 2 3)))
 
 (test-section "dump")
@@ -41,35 +41,35 @@
          (tuplespace-dump *ts*)))
 
 (test-section "readp")
-(test-ts "tuplespace-readp should return matched value" 
-         '(1 2 3) 
+(test-ts "tuplespace-readp should return matched value"
+         '(1 2 3)
          (begin
            (tuplespace-write *ts* '(1 2 3))
            (tuplespace-readp *ts* '(1 2 3))))
 
-(test-ts "tuplespace-readp should return #f when not found" 
-         #f 
+(test-ts "tuplespace-readp should return #f when not found"
+         #f
          (begin
            (tuplespace-write *ts* '(1 2 3))
            (tuplespace-readp *ts* '(4 5))))
 
-(test-ts "tuplespace-readp should recognize wild card" 
-         '(1 2 3) 
+(test-ts "tuplespace-readp should recognize wild card"
+         '(1 2 3)
          (begin
            (tuplespace-write *ts* '(1 2 3))
            (tuplespace-write *ts* '(4 5 6))
            (tuplespace-write *ts* '(1 2))
            (tuplespace-readp *ts* '(1 _ _))))
 
-(test-ts "tuplespace-readp should recognize 'not' pattern" 
+(test-ts "tuplespace-readp should recognize 'not' pattern"
          '(3 4 5)
          (begin
            (tuplespace-write *ts* '(1 2 3))
            (tuplespace-write *ts* '(3 4 5))
            (tuplespace-readp *ts* '((not 1) _ _))))
 
-(test-ts "tuplespace-readp should return #f when not found" 
-         #f 
+(test-ts "tuplespace-readp should return #f when not found"
+         #f
          (begin
            (tuplespace-write *ts* '(1 2 3))
            (tuplespace-write *ts* '(3 4 5))
@@ -132,7 +132,7 @@
   #f
   (tuplespace-unsafe-query? '(_ (? (pa$ < 100)) _ _ _)
            '(pa$ <)))
-       
+
 ;(test-ts "tuplespace-read should raise error for unsafe query"
 ;         #f
 ;         (guard (e ((is-a? e <error>) 1)

@@ -1,5 +1,5 @@
   //
-  // Parser 
+  // Parser
   // copied from jsScheme - should be rewrriten (support #0=, etc)
   //
   BiwaScheme.Parser = BiwaScheme.Class.create({
@@ -67,7 +67,7 @@
       r = this.getObject();
       return r;
     },
-    
+
     getList: function( close ) {
       var list = BiwaScheme.nil, prev = list;
       while( this.i < this.tokens.length ) {
@@ -97,9 +97,9 @@
     getVector: function( close ) {
       var arr = new Array();
       while( this.i < this.tokens.length ) {
-        
+
         this.eatObjectsInSexpComment("Input stream terminated unexpectedly(in vector)");
-        
+
         if( this.tokens[ this.i ] == ')' ||
         this.tokens[ this.i ] == ']' ||
         this.tokens[ this.i ] == '}' ) { this.i++; break; }
@@ -112,9 +112,9 @@
       while( this.tokens[ this.i ] == '#;' ) {
         this.i++;
         if ((this.getObject() == BiwaScheme.Parser.EOS) || (this.i >= this.tokens.length))
-          throw new BiwaScheme.Error(err_msg);  
+          throw new BiwaScheme.Error(err_msg);
       }
-    }, 
+    },
 
     getObject0: function() {
       if( this.i >= this.tokens.length )
@@ -134,7 +134,7 @@
       if( s || t == '(' || t == '#(' || t == '[' || t == '#[' || t == '{' || t == '#{' ) {
         return s ? new BiwaScheme.Pair( BiwaScheme.Sym(s), new BiwaScheme.Pair( this.getObject(), BiwaScheme.nil ))
         : (t=='(' || t=='[' || t=='{') ? this.getList(t) : this.getVector(t);
-      } 
+      }
       else {
         switch(t){
           case "+inf.0" : return Infinity;
@@ -145,10 +145,10 @@
         var n;
         if( /^#x[0-9a-z]+$/i.test(t) ) {  // #x... Hex
           n = new Number('0x'+t.substring(2,t.length) );
-        } 
+        }
         else if( /^#d[0-9\.]+$/i.test(t) ) {  // #d... Decimal
           n = new Number( t.substring(2,t.length) );
-        } 
+        }
         else{
           n = new Number(t);  // use constrictor as parser
         }
@@ -177,5 +177,5 @@
   });
   // indicates end of source file
   BiwaScheme.Parser.EOS = new Object();
-  
+
 

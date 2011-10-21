@@ -4,7 +4,7 @@
 (define MAX_MESSAGES 100)
 (define o #t)
 ; give latest msg
-(add-manager 
+(add-manager
   (lambda ()
     (while #t
       (tuplespace-take *ts* '(connect))
@@ -18,7 +18,7 @@
 
 
 ;;; add msg-id, delete old message
-;(add-manager 
+;(add-manager
 ;  (lambda ()
 ;    (while #t
 ;      (let ((tuple (tuplespace-take *ts* '(message _ _ _))))
@@ -27,7 +27,7 @@
 ;        ;(print "foo")
 ;        ;(print (tuplespace-takep *ts* `(,(- message-id MAX-MESSAGES) _ _ _)))
 ;        ;(print "bar")
-;        
+;
 ;        ))))
 ;
 

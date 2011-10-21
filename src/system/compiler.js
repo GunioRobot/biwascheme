@@ -13,7 +13,7 @@ BiwaScheme.Compiler = BiwaScheme.Class.create({
   //free: set
   //e: env(= [locals, frees])
   //next: opc
-  //ret: opc["refer_*", n, ["argument", 
+  //ret: opc["refer_*", n, ["argument",
   //          ["refer_*", n, ... ["argument", next]
   collect_free: function(free, e, next){
     var vars = free;
@@ -55,7 +55,7 @@ BiwaScheme.Compiler = BiwaScheme.Class.create({
 
   //generate boxing code (intersection of sets & vars)
   //if no need of boxing, just returns next
-  //  sets(Set): assigned variables 
+  //  sets(Set): assigned variables
   //  vars(List): used variables
   //  next(opc):
   //  ret(opc):
@@ -143,9 +143,9 @@ BiwaScheme.Compiler = BiwaScheme.Class.create({
 
   // find_free(): find free variables in x
   //              these variables are collected by collect_free().
-  // x: expression 
+  // x: expression
   // b: set of local vars (= variables which are not free)
-  // f: set of free var candidates 
+  // f: set of free var candidates
   //    (local vars of outer lambdas)
   // ret: set of free vars
   find_free: function(x, b, f){
@@ -296,9 +296,9 @@ BiwaScheme.Compiler = BiwaScheme.Class.create({
 
           var left = x.cdr.car;
           var exp  = x.cdr.cdr;
-          
+
           //define variable
-          if(left instanceof BiwaScheme.Symbol){    
+          if(left instanceof BiwaScheme.Symbol){
             if (exp === BiwaScheme.nil) {
               // eg. (define a)
               x = BiwaScheme.undef;
@@ -315,8 +315,8 @@ BiwaScheme.Compiler = BiwaScheme.Class.create({
             BiwaScheme.TopEnv[left.name] = BiwaScheme.undef;
             next = ["assign-global", left.name, next]; //should raise for improper list?
           }
-          //define function 
-          else if(left instanceof BiwaScheme.Pair){ 
+          //define function
+          else if(left instanceof BiwaScheme.Pair){
             var fname=left.car, args=left.cdr;
             var lambda = new BiwaScheme.Pair(BiwaScheme.Sym("lambda"), new BiwaScheme.Pair(args, exp));
             x = lambda;
@@ -324,7 +324,7 @@ BiwaScheme.Compiler = BiwaScheme.Class.create({
             next = ["assign-global", fname.name, next];
           }
           //error
-          else{                          
+          else{
             throw new BiwaScheme.Error("compile: define needs a leftbol or pair: got "+left);
           }
           break;
@@ -367,7 +367,7 @@ BiwaScheme.Compiler = BiwaScheme.Class.create({
                           sets.set_union(s.set_intersect(free)),
                           f.set_union(proper.to_set()),
                           ["return"]);
-          var do_close = ["close", 
+          var do_close = ["close",
                            free.size(),
                            this.make_boxes(sets, proper, do_body),
                            next,
@@ -399,27 +399,27 @@ BiwaScheme.Compiler = BiwaScheme.Class.create({
           next = do_assign;
           break;
 
-        case BiwaScheme.Sym("call/cc"): 
+        case BiwaScheme.Sym("call/cc"):
           var x=x.second();
-          var c = ["conti", 
+          var c = ["conti",
                     (this.is_tail(next) ? (e[0].size() + 1) : 0), //number of args for outer lambda
                     ["argument",
                     ["constant", 1,
                     ["argument",
-                      this.compile(x, e, s,f,  
+                      this.compile(x, e, s,f,
                         (this.is_tail(next) ? ["shift", 1, ["apply"]]
                                             : ["apply"]))]]]];
                   //note: proc for call/cc takes 1 argument (= ["apply", 1])
           return this.is_tail(next) ? c : ["frame", c, next];
 
-        default: 
-          //apply 
-          //x = (func 1 2) 
+        default:
+          //apply
+          //x = (func 1 2)
           //x.car = func = '(lambda (x) ..) or Symbol
           //x.cdr = args = '(1 2)
           var func = x.car;
           var args = x.cdr;
-          var c = this.compile(func, e, s,f,  
+          var c = this.compile(func, e, s,f,
                     this.is_tail(next) ? ["shift", args.length(), ["apply"]]
                                        : ["apply"]);
 

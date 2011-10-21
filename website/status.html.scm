@@ -11,7 +11,7 @@
                    stat)))))
        rows))
 
-(define make-r6rs-base-rows 
+(define make-r6rs-base-rows
   (pa$ make-table-rows
     (lambda (section)
       #`"http://www.r6rs.org/final/html/r6rs/r6rs-Z-H-14.html#node_sec_,|section|")))
@@ -88,7 +88,7 @@
           )))
 
       (h3 "R6RS Standard Libraries")
-      
+
       (table
         (make-r6rs-library-rows
           '((1 "Unicode"
@@ -131,7 +131,7 @@
              "(no plan)"))))
 
       (p "'(no plan)' means that I have no plan to support it,
-         but does not mean will never include it; 
+         but does not mean will never include it;
          patches are welcome.")
 
       (h3 "SRFIs")
